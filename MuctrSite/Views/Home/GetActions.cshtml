@@ -1,0 +1,17 @@
+﻿@model Events
+@{
+    ViewData["Title"] = "События";
+}
+
+<div class="news-and-actions">
+    <p class="dates">@Model.startTime.ToString("dd/MM/yyyy") - @Model.endTime.ToString("dd/MM/yyyy")</p>
+    <div class="more-n-a">
+        <h5>@Model.title</h5>
+        <img src="@Model.mediaUrl" />
+        <div>
+            <p>@Html.Raw(Model.description)</p>
+        </div>
+        <br />
+        <br />
+    </div>
+</div>

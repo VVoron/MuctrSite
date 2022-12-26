@@ -1,0 +1,15 @@
+﻿@model News
+@{
+    ViewData["Title"] = "Новости";
+}
+
+<div class="news-and-actions">
+    <p class="dates">@Model.publicationDate.ToString("dd/MM/yyyy")</p>
+    <div class="more-n-a">
+        <h5>@Model.title</h5>
+        <img src="@Model.mediaUrl" />
+        <p>@Html.Raw(Model.description)</p>
+        <br />
+        <br />
+    </div>
+</div>

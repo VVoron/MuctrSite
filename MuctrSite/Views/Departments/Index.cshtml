@@ -1,0 +1,43 @@
+﻿@model FacultyList
+@{
+    ViewData["Title"] = "Факультеты и кафедры";
+    int i = 0;
+}
+
+<div class="headers-of-main-page">
+    <h2>Факультеты и кафедры</h2>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="btn-add">
+        <a asp-controller="Departments" asp-action="CreateFaculty" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Добавить факультет
+        </a>
+    </div>
+    <br />
+}
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    @foreach (Faculty item in Model.Faculties)
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-heading-@i">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-@i" aria-expanded="true" aria-controls="panelsStayOpen-collapse-@i">
+                @item.name
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapse-@i" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-@i">
+                <div class="accordion-body departments">
+                    @Html.Raw(@item.description)
+                </div>
+                <a class="text-decoration-none btn btn-warning" asp-controller="Departments" asp-action="GetDepartment" asp-route-id="@item.id">Состав факультета/кафедры</a>
+            </div>
+        </div>
+        i++;
+    }
+</div>

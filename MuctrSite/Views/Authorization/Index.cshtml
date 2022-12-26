@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Авторизация";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h1 class="h3 mb-3 fw-normal">Здравствуйте, @User.Identity.Name</h1>
+    <a asp-controller="Authorization" asp-action="Logout" class="w-100 btn btn-lg btn-primary" type="submit">Выйти</a>
+}
+else
+{
+ <div class="text-center">
+    <main class="form-signin w-50 m-auto">
+      <form autocomplete="on" method="post" asp-controller="Authorization" asp-action="Index">
+        <img class="mb-4" src="~/img/logo-header.jpg" alt="" width="400" height="300">
+        <h1 class="h3 mb-3 fw-normal">Введите данные для входа</h1>
+        <div asp-validation-summary="All">
+            <div class="form-floating">
+              <input name="Name" type="text" class="form-control" id="floatingInput" placeholder="Имя пользователя">
+              <label for="floatingInput">Имя пользователя</label>
+            </div>
+            <div class="form-floating">
+              <input name="Password" type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
+              <label for="floatingPassword">Пароль</label>
+            </div>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+      </form>
+    </main>
+</div>   
+}

@@ -1,0 +1,116 @@
+﻿@model DepAndEmpl
+@{
+    ViewData["Title"] = "Факультеты и кафедры";
+    int i = 0;
+}
+
+<div class="headers-of-dep-page">
+    <a asp-controller="Departments" asp-action="Index">Факультеты и кафедры</a>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+    </svg>
+    @Model.FacultyName
+</div>
+
+<div class="Dean-div">
+    <h5>Декан факультета</h5>
+    <table width="100%" class="Dean-info">
+        <tr>
+            <td>
+                <img src="@Model.Dean.mediaUrl" />
+            </td>
+            <td>
+                <h5>@Model.Dean.surname @Model.Dean.firstName @Model.Dean.secondName</h5>
+            </td>
+        </tr>
+        <tr style="background-color: rgb(230, 230, 230)">
+            <td>Телефон</td>
+            <td>@Model.Dean.phoneNumber</td>
+        </tr>
+        <tr>
+            <td>E-mail</td>
+            <td>@Model.Dean.email</td>
+        </tr>
+    </table>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="btn-add">
+        <a asp-controller="Departments" asp-action="CreateDepartment" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Добавить кафедру
+        </a>
+    </div>
+    <br />
+}
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    @foreach (Departments item in Model.Departments.Departments)
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-heading-@i">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-@i" aria-expanded="true" aria-controls="panelsStayOpen-collapse-@i">
+                @item.name
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapse-@i" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-@i">
+                <div class="accordion-body">
+                    <h2>Работники и преподаватели</h2>
+                    @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="btn-add">
+                                <a asp-controller="Departments" asp-action="CreateProf" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                    Добавить преподавателя
+                                </a>
+                            </div>
+                            <br />
+                        }
+                    <ul class="department-human">
+                    @foreach(Employers human in Model.Professors.Professors)
+                    {
+                        @if (human.departmentId == item.id)
+                        {
+                            <li class="container">
+                                @if (@human.mediaUrl != ""){
+                                    <img src="@human.mediaUrl" alt="" />
+                                }
+                                else{
+                                    <img src="https://vsegda-pomnim.com/uploads/posts/2022-04/1649232831_30-vsegda-pomnim-com-p-pustoe-litso-foto-37.jpg" alt="" />
+                                }
+                                <table width="100%">
+                                    <tr>
+                                        <td colspan="2">
+                                            <h5>@human.surname @human.firstName @human.secondName</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color: rgb(230, 230, 230)">
+                                        <td>Занимаемые должности</td>
+                                        <td>@human.position</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Телефон</td>
+                                        <td>@human.phoneNumber</td>
+                                    </tr>
+                                    <tr style="background-color: rgb(230, 230, 230)">
+                                        <td>E-mail</td>
+                                        <td>@human.email</td>
+                                    </tr>
+                                </table>
+                            </li>
+                            <div class="department-border"></div>
+                        }
+                    }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        i++;
+    }
+</div>

@@ -1,0 +1,47 @@
+﻿@model Events
+
+<form method="post" asp-action="CreateAction">
+    <div class="pt-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Создание события</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="title">Название</label>
+            <input asp-for="title" class="form-control" />
+            <span asp-validation-for="title" class="text-danger"></span>
+        </div>  
+        
+        <div class="mb-3">
+            <label asp-for="description">Описание</label>
+            <textarea asp-for="description" class="form-control" style="height:300px;width:100%;"></textarea>
+            <span asp-validation-for="description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="startTime">Дата начала</label>
+            <input asp-for="startTime" class="form-control" />
+            <span asp-validation-for="startTime" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="endTime">Дата публикации</label>
+            <input asp-for="endTime" class="form-control" />
+            <span asp-validation-for="endTime" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="mediaUrl">Ссылка на фото</label>
+            <input asp-for="mediaUrl" class="form-control" />
+            <span asp-validation-for="mediaUrl" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:200px">Создать</button>
+        <a asp-controller="Home" asp-action="GetAllActions" class="btn btn-secondary" style="width:200px">Вернуться обратно</a>
+    </div>
+</form>
+
+@section Scripts{
+   @{
+       <partial name="_ValidationScriptsPartial" />
+   }
+}
